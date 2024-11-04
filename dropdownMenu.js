@@ -2,7 +2,6 @@ import { getAllCountryNames } from './dataReader.js';
 import { getCityNamesByCountry } from './dataReader.js';
 
 
-
     // Array of countries
     const countries = await getAllCountryNames();
 
@@ -55,7 +54,7 @@ import { getCityNamesByCountry } from './dataReader.js';
         // Add remove button to the tag
         const removeButton = document.createElement('button');
         removeButton.classList.add('remove');
-        removeButton.textContent = '✖';
+        removeButton.textContent = '✖'; 
         removeButton.addEventListener('click', function () {
             selectedCitiesContainer.removeChild(cityTag);
         });
