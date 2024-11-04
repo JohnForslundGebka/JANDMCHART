@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Data Chart</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 
 <body>
@@ -13,8 +15,8 @@
         <canvas id="weatherChart"></canvas>
     </div>
 
-    <script src="node_modules/chart.js/dist/chart.umd.js"></script>
-    <script src="script.js"></script>
+    <!-- Load script.js as a module -->
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
