@@ -1,7 +1,10 @@
-// JavaScript Code
-document.addEventListener('DOMContentLoaded', () => {
+import { getAllCountryNames } from './dataReader.js';
+import { getCityNamesByCountry } from './dataReader.js';
+
+
+
     // Array of countries
-    const countries = ["Sweden", "France", "USA", "Germany", "Australia"];
+    const countries = await getAllCountryNames();
 
     // Get the dropdown element
     const countryDropdown = document.getElementById('country-dropdown');
@@ -9,13 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate dropdown with countries
     countries.forEach(country => {
         const option = document.createElement('option');
-        option.value = country.toLowerCase(); // Lowercase value for easy comparison
         option.textContent = country;
         countryDropdown.appendChild(option);
     });
 
     // Event listener for when a country is selected
-    countryDropdown.addEventListener('change', function () {
+    countryDropdown.addEventListener('change', async function () {
         const selectedCountry = this.value;
         
         // Clear previous city results
@@ -23,32 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
         cityResultsContainer.innerHTML = '';
 
         // Example array of cities for each country (simulate CSV data)
-        const citiesData = {
-            sweden: ['Stockholm', 'Gothenburg', 'Malmö'],
-            france: ['Paris', 'Lyon', 'Marseille'],
-            usa: ['New York', 'Los Angeles', 'Chicago'],
-            germany: ['Berlin', 'Hamburg', 'Munich'],
-            australia: ['Sydney', 'Melbourne', 'Brisbane']
-        };
+        const citiesData = await getCityNamesByCountry(selectedCountry);
+           
+        
+        citiesData.forEach(city => {
+            const cityItem = document.createElement('div');
+            cityItem.classList.add('city-item');
+            cityItem.textContent = city;
 
-        // If cities exist for the selected country, display them
-        if (citiesData[selectedCountry]) {
-            citiesData[selectedCountry].forEach(city => {
-                const cityItem = document.createElement('div');
-                cityItem.classList.add('city-item');
-                cityItem.textContent = city;
-
-                // Add click event to each city to add it to selectedPlaces
+            // Add click event to each city to add it to selectedPlaces
                 cityItem.addEventListener('click', function () {
                     addCityToSelected(city);
                 });
 
                 cityResultsContainer.appendChild(cityItem);
-            });
-        } else {
-            // If no cities found, display a message
-            cityResultsContainer.textContent = 'No cities found for this country.';
-        }
+        })
+
     });
 
     // Function to add selected city as a tag in selectedPlaces
@@ -71,4 +63,3 @@ document.addEventListener('DOMContentLoaded', () => {
         cityTag.appendChild(removeButton);
         selectedCitiesContainer.appendChild(cityTag);
     }
-});

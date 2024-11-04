@@ -1,6 +1,7 @@
 import { getFilteredWeatherData } from './dataReader.js';
 import { getCityNamesByCountry } from './dataReader.js';
 
+
     try {
         // Get filtered weather data for Stockholm between 1950 and 2010
         const filteredData = await getFilteredWeatherData("Stockholm", 1950, 1960);
