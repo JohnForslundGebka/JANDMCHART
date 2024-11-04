@@ -188,11 +188,6 @@ header {
     margin-bottom: 10px;
 }
 
-.chart img {
-    max-width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
 
 /* Footer */
 footer {
@@ -210,8 +205,6 @@ footer a {
     font-size: 1em;
 }
 
-.weatherChart {
-    width: 2000px;
-}
+
 
 

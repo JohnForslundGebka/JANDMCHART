@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Get the canvas context from the HTML
         const ctx = document.getElementById('weatherChart').getContext('2d');
 
-        ctx.canvas.parentNode.style.height = '800px';
-        ctx.canvas.parentNode.style.width = '1000px';
+
 
         // Create the chart using Chart.js
         new Chart(ctx, {
