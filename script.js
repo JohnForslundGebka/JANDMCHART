@@ -3,7 +3,7 @@ import { getFilteredWeatherData } from './dataReader.js';
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Get filtered weather data for Stockholm between 1950 and 2010
-        const filteredData = await getFilteredWeatherData("Stockholm", 1950, 2010);
+        const filteredData = await getFilteredWeatherData("Stockholm", 1950, 1960);
 
         // Extract years and temperatures from the filtered data
         const years = filteredData.map(row => row.year);
@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Get the canvas context from the HTML
         const ctx = document.getElementById('weatherChart').getContext('2d');
+
+        ctx.canvas.parentNode.style.height = '800px';
+        ctx.canvas.parentNode.style.width = '1000px';
 
         // Create the chart using Chart.js
         new Chart(ctx, {
@@ -35,6 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 scales: {
                     y: {
+                        suggestedMin: 50,
+                        suggestedMax: 70,
                         beginAtZero: true,
                         title: {
                             display: true,
@@ -42,6 +47,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                     },
                     x: {
+                        suggestedMin: 1950,
+                        suggestedMax: 1960,
                         title: {
                             display: true,
                             text: 'Year'
