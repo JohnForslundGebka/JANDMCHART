@@ -13,7 +13,6 @@ import { getCityNamesByCountry } from './dataReader.js';
         const ctx = document.getElementById('weatherChart').getContext('2d');
 
 
-
         // Create the chart using Chart.js
         new Chart(ctx, {
             type: 'line',
