@@ -1,0 +1,213 @@
+/* Reset and general styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.city-button {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.tag-container .tag {
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    margin: 5px;
+    background-color: #e0f7e0;
+    border: 1px solid green;
+}
+
+.tag button.remove {
+    margin-left: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+.country-selection {
+    margin-bottom: 20px;
+}
+
+#country {
+    width: 100%;
+    padding: 5px;
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+.city-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.city-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.city-item.selected {
+    background-color: #e3f7ff;
+}
+
+.check {
+    color: green;
+}
+
+.add {
+    color: blue;
+}
+
+.formatting-options {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* Content Area */
+.content-area {
+    width: 70%;
+}
+
+/* Selected Places Box */
+.selectedPlaces {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.tag-container {
+    display: flex;
+    gap: 10px;
+}
+
+.tag {
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.tag.red {
+    background-color: #ffebeb;
+    border: 2px solid red;
+}
+
+.tag.green {
+    background-color: #eaffea;
+    border: 2px solid green;
+}
+
+.tag.blue {
+    background-color: #ebf0ff;
+    border: 2px solid blue;
+}
+
+.tag.darkgreen {
+    background-color: #e0f7e0;
+    border: 2px solid darkgreen;
+}
+
+.remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1em;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Chart Area */
+.chart-area {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.chart {
+    text-align: center;
+}
+
+.chart p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.chart img {
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+}
+
+footer a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1em;
+}
+
+

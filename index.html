@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Chart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Temperature Chart</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Search box -->
+            <aside class="sidebar">
+                <div class="country-selection">
+                    <label for="country">Search country</label>
+                    <input type="text" id="country" placeholder="Type to search...">
+                </div>
+            
+                <!-- Container for created city items based on search -->
+                <div id="city-results" class="city-list">
+                    <p>Search results will be displayed here</p>
+
+                </div>
+        
+
+                <button class="formatting-options">Formatting options</button>
+            </aside>
+            
+           
+
+            <!-- Content Area (Selected Places + Chart) -->
+            <div class="content-area">
+                <!-- Selected Places Box -->
+                <section class="selectedPlaces">
+                    <div class="tag-container">
+                        <span class="tag red">Göteborg, Sweden <button class="remove">✖</button></span>
+                        <span class="tag green">Malmö, Sweden <button class="remove">✖</button></span>
+                        <span class="tag blue">Paris, France <button class="remove">✖</button></span>
+                        <span class="tag darkgreen">New York, USA <button class="remove">✖</button></span>
+                    </div>
+                </section>
+
+                <!-- Chart Area -->
+                <section class="chart-area">
+                    <div class="chart">
+                        
+                        <!-- Add the chart.js here -->
+                        <img src="chart-placeholder.png" alt="Chart placeholder">
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a href="#">Contact</a>
+        <a href="#">Info</a>
+        <a href="#">Guide</a>
+    </footer>
+</body>
+</html>
