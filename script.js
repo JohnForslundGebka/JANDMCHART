@@ -1,6 +1,6 @@
 import { getFilteredWeatherData } from './dataReader.js';
+import { getCityNamesByCountry } from './dataReader.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Get filtered weather data for Stockholm between 1950 and 2010
         const filteredData = await getFilteredWeatherData("Stockholm", 1950, 1960);
@@ -59,4 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Error while drawing chart:', error);
     }
-});
+
+
+    
+

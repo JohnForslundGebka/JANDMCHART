@@ -119,6 +119,7 @@ header {
 /* Content Area */
 .content-area {
     width: 70%;
+    padding-right: 10%;
 }
 
 /* Selected Places Box */
