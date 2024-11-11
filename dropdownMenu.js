@@ -37,7 +37,7 @@ import { removeDataFromGraph } from './script.js';
 
             // Add click event to each city to add it to selectedPlaces
                 cityItem.addEventListener('click', function () {
-                    addDataToGraph(city,1950,1960);
+                    addDataToGraph(city);
                     addCityToSelected(city);
                 });
 

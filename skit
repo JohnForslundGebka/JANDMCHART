@@ -6,31 +6,37 @@ let amountOfDataPoints = 0;
 let citysToPrint = [];
 
 let startYear = 1910;
-let endYear = 2005;
+let endYear = 2010;
 
-//create init graph
+// Initialize the chart with initial data
 try {
-    // Get filtered weather data for Stockholm between 1950 and 2010
     const filteredData = await getFilteredWeatherData("Stockholm", startYear, endYear);
 
     // Extract years and temperatures from the filtered data
     const years = filteredData.map(row => row.year);
+    const temperatures = filteredData.map(row => parseFloat(row.AverageTemperatureFahr));
 
     // Get the canvas context from the HTML
     const ctx = document.getElementById('weatherChart').getContext('2d');
-
 
     // Create the chart using Chart.js
     weatherChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: getYearsInRange(),
+            labels: years,
+            datasets: [{
+                label: "Stockholm",
+                data: temperatures,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1,
+                fill: false
+            }]
         },
         options: {
             responsive: true,
             plugins: {
                 legend: {
-                    display: false // Disable the default legend
+                    display: true // Enable legend for multiple datasets
                 }
             },
             scales: {
@@ -57,38 +63,42 @@ try {
     console.error('Error while drawing chart:', error);
 }
 
-function reloadDataPointsInGraph(){
+// Function to update the year range and reload the chart
+function updateYearRange(newStartYear, newEndYear) {
+    startYear = newStartYear;
+    endYear = newEndYear;
+    reloadDataPointsInGraph();
+}
 
-    weatherChart.clear();
-    weatherChart.data.labels = getYearsInRange();
+// Function to reload data points in the chart based on the cities and updated year range
+function reloadDataPointsInGraph() {
+    weatherChart.data.datasets = []; // Clear existing datasets
+    amountOfDataPoints = 0; // Reset color counter if needed
+
     citysToPrint.forEach(city => {
-        addDataToGraph(city);
-    })
-    weatherChart.update();  
+        addDataToGraph(city); // Reload data with updated year range
+    });
+
+    weatherChart.update(); // Update the chart to reflect changes
 }
 
 // Function to add new data to the chart
 export async function addDataToGraph(city) {
     try {
-        
-        citysToPrint.push("city");
-        // Get new filtered weather data for the specified city and year range
         const filteredData = await getFilteredWeatherData(city, startYear, endYear);
 
-        // Extract years and temperatures
         const years = filteredData.map(row => row.year);
         const temperatures = filteredData.map(row => parseFloat(row.AverageTemperatureFahr));
         
-        // Add the new dataset to the existing chart
         weatherChart.data.datasets.push({
             label: `${city}`,
             data: temperatures,
-            borderColor: colors[amountOfDataPoints], 
+            borderColor: colors[amountOfDataPoints % colors.length], 
             tension: 0.1,
             fill: false
         });
 
-        // Update the chart to render the new dataset
+        amountOfDataPoints++; // Increment counter to use the next color
         weatherChart.update();
 
     } catch (error) {
@@ -104,41 +114,16 @@ const colors = [
     '#33F3FF', '#FF5733', '#5733FF', '#33FF57', '#FF33A8'
 ];
 
-// Function to get a unique color
-export function getUniqueColor() {
-    if (amountOfDataPoints > colors.length) {
-        console.error("No more colors available. All unique colors have been used.");
-        return '#000000'; // Fallback color if all colors are used
-    }
-    //Increment the graph data points counter for unique colors
-    amountOfDataPoints++;
-    return colors[amountOfDataPoints]; // Remove and return the first color
-}
-
-
-export function removeDataFromGraph(city){
-
-    // Find the index of the dataset with the matching label
+// Function to remove a dataset from the chart by city name
+export function removeDataFromGraph(city) {
     const datasetIndex = weatherChart.data.datasets.findIndex(dataset => 
-      dataset.label && dataset.label.startsWith(city) // Ensure label exists before calling startsWith
+        dataset.label && dataset.label.startsWith(city)
     );
-    // If the dataset is found, remove it from the datasets array
+
     if (datasetIndex !== -1) {
         weatherChart.data.datasets.splice(datasetIndex, 1);
-        weatherChart.update(); // Update the chart to reflect the changes
+        weatherChart.update();
     } else {
         console.log(`Dataset for ${city} not found.`);
     }
-}
-
-
-function getYearsInRange() {
-    const years = [];
-    
-    // Loop from startYear to endYear, adding each year to the array
-    for (let year = startYear; year <= endYear; year++) {
-        years.push(year);
-    }
-    
-    return years;
 }
