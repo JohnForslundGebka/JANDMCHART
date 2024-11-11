@@ -5,8 +5,8 @@ let weatherChart;
 let amountOfDataPoints = 0;
 let citysToPrint = [];
 
-let startYear = 1910;
-let endYear = 2005;
+let startYear = 1900;
+let endYear = 2018;
 
 //create init graph
 try {
@@ -35,8 +35,8 @@ try {
             },
             scales: {
                 y: {
-                    suggestedMin: 50,
-                    suggestedMax: 70,
+                    suggestedMin: 0,
+                    suggestedMax: 30,
                     beginAtZero: true,
                     title: {
                         display: true,
@@ -68,21 +68,38 @@ function reloadDataPointsInGraph(){
 }
 
 // Function to add new data to the chart
+// Function to add new data to the chart with yearly averages
 export async function addDataToGraph(city) {
     try {
-        
-        citysToPrint.push("city");
-        // Get new filtered weather data for the specified city and year range
+        citysToPrint.push(city);
+        // Get filtered weather data for the specified city and year range
         const filteredData = await getFilteredWeatherData(city, startYear, endYear);
 
-        // Extract years and temperatures
-        const years = filteredData.map(row => row.year);
-        const temperatures = filteredData.map(row => parseFloat(row.AverageTemperatureFahr));
-        
-        // Add the new dataset to the existing chart
+        // Calculate average temperature per year in Celsius
+        const yearlyAverages = {};
+        filteredData.forEach(row => {
+            const year = row.year;
+            const tempFahrenheit = parseFloat(row.AverageTemperatureFahr);
+            const tempCelsius = (tempFahrenheit - 32) * 5 / 9; // Convert to Celsius
+            
+            if (!yearlyAverages[year]) {
+                yearlyAverages[year] = { totalTemp: 0, count: 0 };
+            }
+            
+            yearlyAverages[year].totalTemp += tempCelsius;
+            yearlyAverages[year].count += 1;
+        });
+
+        // Create an array of yearly averages in Celsius for plotting
+        const years = Object.keys(yearlyAverages).map(year => parseInt(year));
+        const averageTemperatures = years.map(year => 
+            yearlyAverages[year].totalTemp / yearlyAverages[year].count
+        );
+
+        // Add the new dataset with average temperatures in Celsius to the chart
         weatherChart.data.datasets.push({
-            label: `${city}`,
-            data: temperatures,
+            label: `${city} (${startYear}-${endYear})`,
+            data: averageTemperatures,
             borderColor: colors[amountOfDataPoints], 
             tension: 0.1,
             fill: false
@@ -95,6 +112,7 @@ export async function addDataToGraph(city) {
         console.error('Error while adding data to chart:', error);
     }
 }
+
 
 // Array of 20 distinct colors
 const colors = [
