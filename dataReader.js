@@ -115,6 +115,3 @@ export function getAllCountryNames() {
 }
 
 
-//code code code
-
-//wrte mote code xxXx
