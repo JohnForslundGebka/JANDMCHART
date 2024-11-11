@@ -2,6 +2,7 @@ import { getAllCountryNames } from './dataReader.js';
 import { getCityNamesByCountry } from './dataReader.js';
 import { addDataToGraph } from './script.js';
 import { getUniqueColor } from './script.js';
+import { removeDataFromGraph } from './script.js';
 
 
     // Array of countries
@@ -64,6 +65,7 @@ import { getUniqueColor } from './script.js';
         removeButton.textContent = '✖'; 
         removeButton.addEventListener('click', function () {
             selectedCitiesContainer.removeChild(cityTag);
+            removeDataFromGraph(city);
         });
 
         cityTag.appendChild(removeButton);

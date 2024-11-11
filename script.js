@@ -48,8 +48,6 @@ try {
                     }
                 },
                 x: {
-                    suggestedMin: 1950,
-                    suggestedMax: 1960,
                     title: {
                         display: true,
                         text: 'Year'
@@ -74,12 +72,9 @@ export async function addDataToGraph(city, startYear, endYear) {
         const years = filteredData.map(row => row.year);
         const temperatures = filteredData.map(row => parseFloat(row.AverageTemperatureFahr));
         
-        
-
-
         // Add the new dataset to the existing chart
         weatherChart.data.datasets.push({
-            label: `${city} Temperature (${startYear}-${endYear})`,
+            label: `${city}`,
             data: temperatures,
             borderColor: colors[amountOfDataPoints], 
             tension: 0.1,
@@ -93,7 +88,6 @@ export async function addDataToGraph(city, startYear, endYear) {
         console.error('Error while adding data to chart:', error);
     }
 }
-
 
 // Array of 20 distinct colors
 const colors = [
@@ -114,5 +108,20 @@ export function getUniqueColor() {
     return colors[amountOfDataPoints]; // Remove and return the first color
 }
 
+
+export function removeDataFromGraph(city){
+
+    // Find the index of the dataset with the matching label
+    const datasetIndex = weatherChart.data.datasets.findIndex(dataset => 
+      dataset.label && dataset.label.startsWith(city) // Ensure label exists before calling startsWith
+    );
+    // If the dataset is found, remove it from the datasets array
+    if (datasetIndex !== -1) {
+        weatherChart.data.datasets.splice(datasetIndex, 1);
+        weatherChart.update(); // Update the chart to reflect the changes
+    } else {
+        console.log(`Dataset for ${city} not found.`);
+    }
+}
 
 
