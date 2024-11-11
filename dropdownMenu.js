@@ -3,6 +3,7 @@ import { getCityNamesByCountry } from './dataReader.js';
 import { addDataToGraph } from './script.js';
 import { getUniqueColor } from './script.js';
 import { removeDataFromGraph } from './script.js';
+import { citysToPrint } from './script.js';
 
 
     // Array of countries
@@ -38,6 +39,7 @@ import { removeDataFromGraph } from './script.js';
             // Add click event to each city to add it to selectedPlaces
                 cityItem.addEventListener('click', function () {
                     addDataToGraph(city);
+                    citysToPrint.push(city);
                     addCityToSelected(city);
                 });
 

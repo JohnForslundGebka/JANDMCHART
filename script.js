@@ -1,9 +1,19 @@
 import { getFilteredWeatherData } from './dataReader.js';
 import { getCityNamesByCountry } from './dataReader.js';
 
+// Get references to the slider elements and the span elements to show current values
+const startYearSlider = document.getElementById('start-year-slider');
+const endYearSlider = document.getElementById('end-year-slider');
+const startYearValue = document.getElementById('start-year-value');
+const endYearValue = document.getElementById('end-year-value');
+
+// Set initial slider values
+startYearValue.textContent = startYearSlider.value;
+endYearValue.textContent = endYearSlider.value;
+
 let weatherChart;
 let amountOfDataPoints = 0;
-let citysToPrint = [];
+export let citysToPrint = [];
 
 let startYear = 1900;
 let endYear = 2018;
@@ -40,7 +50,7 @@ try {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Temperature (°F)'
+                        text: 'Temperature (°C)'
                     }
                 },
                 x: {
@@ -58,8 +68,7 @@ try {
 }
 
 function reloadDataPointsInGraph(){
-
-    weatherChart.clear();
+    weatherChart.data.datasets = [];
     weatherChart.data.labels = getYearsInRange();
     citysToPrint.forEach(city => {
         addDataToGraph(city);
@@ -67,11 +76,10 @@ function reloadDataPointsInGraph(){
     weatherChart.update();  
 }
 
-// Function to add new data to the chart
+
 // Function to add new data to the chart with yearly averages
 export async function addDataToGraph(city) {
     try {
-        citysToPrint.push(city);
         // Get filtered weather data for the specified city and year range
         const filteredData = await getFilteredWeatherData(city, startYear, endYear);
 
@@ -160,3 +168,18 @@ function getYearsInRange() {
     
     return years;
 }
+
+
+// Update the start year when the slider changes
+startYearSlider.addEventListener('input', function () {
+    startYear = parseInt(this.value);
+    startYearValue.textContent = startYear;
+    reloadDataPointsInGraph(); // Reload the chart with the new year range
+});
+
+// Update the end year when the slider changes
+endYearSlider.addEventListener('input', function () {
+    endYear = parseInt(this.value);
+    endYearValue.textContent = endYear;
+    reloadDataPointsInGraph(); // Reload the chart with the new year range
+});
