@@ -3,7 +3,7 @@ import { getCityNamesByCountry } from './dataReader.js';
 
 let weatherChart;
 
-let amountOfDataPonts = 0;
+let amountOfDataPoints = 0;
 
 //create init graph
 try {
@@ -64,7 +64,6 @@ try {
 }
 
 
-
 // Function to add new data to the chart
 export async function addDataToGraph(city, startYear, endYear) {
     try {
@@ -74,12 +73,15 @@ export async function addDataToGraph(city, startYear, endYear) {
         // Extract years and temperatures
         const years = filteredData.map(row => row.year);
         const temperatures = filteredData.map(row => parseFloat(row.AverageTemperatureFahr));
+        
+        
+
 
         // Add the new dataset to the existing chart
         weatherChart.data.datasets.push({
             label: `${city} Temperature (${startYear}-${endYear})`,
             data: temperatures,
-            borderColor: getUniqueColor(), // Optionally set a unique color for each dataset
+            borderColor: colors[amountOfDataPoints], 
             tension: 0.1,
             fill: false
         });
@@ -102,12 +104,14 @@ const colors = [
 ];
 
 // Function to get a unique color
-function getUniqueColor() {
-    if (colors.length === 0) {
+export function getUniqueColor() {
+    if (amountOfDataPoints > colors.length) {
         console.error("No more colors available. All unique colors have been used.");
         return '#000000'; // Fallback color if all colors are used
     }
-    return colors.shift(); // Remove and return the first color
+    //Increment the graph data points counter for unique colors
+    amountOfDataPoints++;
+    return colors[amountOfDataPoints]; // Remove and return the first color
 }
 
 
