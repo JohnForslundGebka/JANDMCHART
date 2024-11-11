@@ -1,5 +1,6 @@
 import { getAllCountryNames } from './dataReader.js';
 import { getCityNamesByCountry } from './dataReader.js';
+import { addDataToGraph } from './script.js';
 
 
     // Array of countries
@@ -34,6 +35,8 @@ import { getCityNamesByCountry } from './dataReader.js';
 
             // Add click event to each city to add it to selectedPlaces
                 cityItem.addEventListener('click', function () {
+                    addDataToGraph(city,1950,1960);
+                    console.log("knappen trycktes på");
                     addCityToSelected(city);
                 });
 
