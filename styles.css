@@ -209,3 +209,17 @@ footer a {
 
 
 
+.year-selection {
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#year-slider {
+    margin-top: 10px;
+    height: 10px;
+}
+
+#year-range {
+    font-weight: bold;
+    color: #333;
+}

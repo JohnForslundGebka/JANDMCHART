@@ -57,13 +57,15 @@ try {
     console.error('Error while drawing chart:', error);
 }
 
-function reloadDataPointsInGraph(){
-
+export async function reloadDataPointsInGraph(startYear, endYear) {
+    // Clear and reload the chart data
     weatherChart.clear();
-    weatherChart.data.labels = getYearsInRange();
+    weatherChart.data.labels = getYearsInRange(startYear, endYear);
+
     citysToPrint.forEach(city => {
-        addDataToGraph(city);
-    })
+        addDataToGraph(city, startYear, endYear);
+    });
+
     weatherChart.update();  
 }
 
@@ -132,13 +134,11 @@ export function removeDataFromGraph(city){
 }
 
 
-function getYearsInRange() {
+// Adjust getYearsInRange to accept start and end parameters
+function getYearsInRange(startYear, endYear) {
     const years = [];
-    
-    // Loop from startYear to endYear, adding each year to the array
     for (let year = startYear; year <= endYear; year++) {
         years.push(year);
     }
-    
     return years;
 }
