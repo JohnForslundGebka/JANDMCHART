@@ -80,7 +80,6 @@ function reloadDataPointsInGraph(){
 // Function to add new data to the chart with yearly averages
 export async function addDataToGraph(city) {
     try {
-        // Get filtered weather data for the specified city and year range
         const filteredData = await getFilteredWeatherData(city, startYear, endYear);
 
         // Calculate average temperature per year in Celsius
@@ -88,7 +87,7 @@ export async function addDataToGraph(city) {
         filteredData.forEach(row => {
             const year = row.year;
             const tempFahrenheit = parseFloat(row.AverageTemperatureFahr);
-            const tempCelsius = (tempFahrenheit - 32) * 5 / 9; // Convert to Celsius
+            const tempCelsius = (tempFahrenheit - 32) * 5 / 9;
             
             if (!yearlyAverages[year]) {
                 yearlyAverages[year] = { totalTemp: 0, count: 0 };
@@ -98,29 +97,31 @@ export async function addDataToGraph(city) {
             yearlyAverages[year].count += 1;
         });
 
-        // Create an array of yearly averages in Celsius for plotting
-        const years = Object.keys(yearlyAverages).map(year => parseInt(year));
-        const averageTemperatures = years.map(year => 
-            yearlyAverages[year].totalTemp / yearlyAverages[year].count
-        );
+        // Align average temperatures with chart labels
+        const labels = weatherChart.data.labels.map(year => parseInt(year));
+        const averageTemperatures = labels.map(year => {
+            if (yearlyAverages[year]) {
+                return yearlyAverages[year].totalTemp / yearlyAverages[year].count;
+            } else {
+                return null;
+            }
+        });
 
         // Add the new dataset with average temperatures in Celsius to the chart
         weatherChart.data.datasets.push({
-            label: `${city} (${startYear}-${endYear})`,
+            label: city,
             data: averageTemperatures,
-            borderColor: colors[amountOfDataPoints], 
+            borderColor: getUniqueColor(),
             tension: 0.1,
             fill: false
         });
 
-        // Update the chart to render the new dataset
         weatherChart.update();
 
     } catch (error) {
         console.error('Error while adding data to chart:', error);
     }
 }
-
 
 // Array of 20 distinct colors
 const colors = [
