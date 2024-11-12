@@ -131,7 +131,7 @@ header {
     background-color: #f9f9f9;
 }
 
-.tag-container {
+#tag-container {
     display: flex;
     gap: 10px;
 }

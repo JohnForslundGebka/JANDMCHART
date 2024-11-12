@@ -77,3 +77,41 @@ export function getCityNamesByCountry(country) {
             throw error; // Rethrow the error to allow further handling
         });
 }
+
+
+export function getAllCountryNames() {
+    return fetch('temperature.csv')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(csvText => {
+            return new Promise((resolve, reject) => {
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    complete: function(results) {
+                        const data = results.data;
+
+                        // Extract unique country names from the data
+                        const countries = data.map(row => row.Country);
+                        const uniqueCountries = [...new Set(countries)]; // Create a unique list of countries
+
+                        // Resolve the promise with the unique country names
+                        resolve(uniqueCountries);
+                    },
+                    error: function(error) {
+                        reject('Error parsing CSV: ' + error);
+                    }
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching CSV:', error);
+            throw error; // Rethrow the error to allow further handling
+        });
+}
+
+

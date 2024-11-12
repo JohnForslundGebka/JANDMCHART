@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script type="module" src="dropdownMenu.js"></script>
 </head>
 <body>
     <header>
@@ -18,31 +19,28 @@
             <!-- Search box -->
             <aside class="sidebar">
                 <div class="country-selection">
-                    <label for="country">Search country</label>
-                    <input type="text" id="country" placeholder="Type to search...">
+                    <label for="country">Select Country</label>
+                    <select id="country-dropdown">
+                        <option value="">Choose a country...</option>
+                    </select>
                 </div>
             
                 <!-- Container for created city items based on search -->
                 <div id="city-results" class="city-list">
                     <p>Search results will be displayed here</p>
-
                 </div>
-        
-
+            
                 <button class="formatting-options">Formatting options</button>
+                
             </aside>
             
-           
-
+            
             <!-- Content Area (Selected Places + Chart) -->
             <div class="content-area">
                 <!-- Selected Places Box -->
                 <section class="selectedPlaces">
-                    <div class="tag-container">
-                        <span class="tag red">Göteborg, Sweden <button class="remove">✖</button></span>
-                        <span class="tag green">Malmö, Sweden <button class="remove">✖</button></span>
-                        <span class="tag blue">Paris, France <button class="remove">✖</button></span>
-                        <span class="tag darkgreen">New York, USA <button class="remove">✖</button></span>
+                    <div id="tag-container">
+
                     </div>
                 </section>
 
@@ -54,6 +52,16 @@
                 </section>
             </div>
         </div>
+
+        <div class="year-selection">
+            <label for="start-year-slider">Start Year:</label>
+            <input type="range" id="start-year-slider" min="1900" max="2018" value="1900">
+            <span id="start-year-value">1900</span>
+        
+            <label for="end-year-slider">End Year:</label>
+            <input type="range" id="end-year-slider" min="1900" max="2018" value="2018">
+            <span id="end-year-value">2018</span>
+        </div>  
     </main>
 
     <footer>
