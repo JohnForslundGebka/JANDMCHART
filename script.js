@@ -20,7 +20,7 @@ let endYear = 2018;
 
 //create init graph
 try {
-    // Get filtered weather data for Stockholm between 1950 and 2010
+    
     const filteredData = await getFilteredWeatherData("Stockholm", startYear, endYear);
 
     // Extract years and temperatures from the filtered data
@@ -69,6 +69,7 @@ try {
 
 
 function reloadDataPointsInGraph(){
+    amountOfDataPoints = 0;
     weatherChart.data.datasets = [];
     weatherChart.data.labels = getYearsInRange();
     citysToPrint.forEach(city => {
@@ -112,7 +113,7 @@ export async function addDataToGraph(city) {
         weatherChart.data.datasets.push({
             label: city,
             data: averageTemperatures,
-            borderColor: getUniqueColor(),
+            borderColor: colors[amountOfDataPoints],
             tension: 0.1,
             fill: false
         });
@@ -182,7 +183,7 @@ function debounce(func, delay) {
 }
 
 // Debounced version of reloadDataPointsInGraph with a 300ms delay
-const debouncedReloadDataPointsInGraph = debounce(reloadDataPointsInGraph, 300);
+const debouncedReloadDataPointsInGraph = debounce(reloadDataPointsInGraph, 900);
 
 // Update the start year when the slider changes, using debounced function
 startYearSlider.addEventListener('input', function () {
