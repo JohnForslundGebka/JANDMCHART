@@ -67,6 +67,7 @@ try {
     console.error('Error while drawing chart:', error);
 }
 
+
 function reloadDataPointsInGraph(){
     weatherChart.data.datasets = [];
     weatherChart.data.labels = getYearsInRange();
@@ -171,16 +172,28 @@ function getYearsInRange() {
 }
 
 
-// Update the start year when the slider changes
+// Debounce function to limit the frequency of reloadDataPointsInGraph calls
+function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Debounced version of reloadDataPointsInGraph with a 300ms delay
+const debouncedReloadDataPointsInGraph = debounce(reloadDataPointsInGraph, 300);
+
+// Update the start year when the slider changes, using debounced function
 startYearSlider.addEventListener('input', function () {
     startYear = parseInt(this.value);
     startYearValue.textContent = startYear;
-    reloadDataPointsInGraph(); // Reload the chart with the new year range
+    debouncedReloadDataPointsInGraph(); // Use debounced function here
 });
 
-// Update the end year when the slider changes
+// Update the end year when the slider changes, using debounced function
 endYearSlider.addEventListener('input', function () {
     endYear = parseInt(this.value);
     endYearValue.textContent = endYear;
-    reloadDataPointsInGraph(); // Reload the chart with the new year range
+    debouncedReloadDataPointsInGraph(); // Use debounced function here
 });
