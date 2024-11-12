@@ -21,6 +21,7 @@ let endYear = 2018;
 //create init graph
 try {
     
+    //default data just to create a branch
     const filteredData = await getFilteredWeatherData("Stockholm", startYear, endYear);
 
     // Extract years and temperatures from the filtered data
@@ -182,7 +183,7 @@ function debounce(func, delay) {
     };
 }
 
-// Debounced version of reloadDataPointsInGraph with a 300ms delay
+// Debounced version of reloadDataPointsInGraph with a 900ms delay
 const debouncedReloadDataPointsInGraph = debounce(reloadDataPointsInGraph, 900);
 
 // Update the start year when the slider changes, using debounced function
